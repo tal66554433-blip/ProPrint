@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית אירוע | ProPrint Premium Gallery</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="גלריית תמונות דיגיטלית יוקרתית מבית ProPrint. המזכרת הדיגיטלית החכמה שלך מהאירוע.">
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;500;700;900&display=swap">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Gallery Stylesheet -->
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+
+    <!-- BACKGROUND GLOW EFFECTS -->
+    <div class="gallery-glow-orb orb-1"></div>
+    <div class="gallery-glow-orb orb-2"></div>
+
+    <!-- GALLERY HEADER -->
+    <header class="gallery-header">
+        <div class="gallery-container header-flex">
+            <!-- Event Info (Dynamic) -->
+            <div class="event-info">
+                <span class="event-badge" id="event-badge-text">ProPrint NFC Gallery</span>
+                <h1 id="event-title">הגלריה הדיגיטלית שלך</h1>
+                <p class="event-date" id="event-date"><i class="fa-regular fa-calendar-days"></i> טוען תאריך...</p>
+            </div>
+            
+            <!-- Logo / Branding -->
+            <div class="branding">
+                <a href="../index.html" class="logo-link">
+                    <img src="../assets/logo.jpg" alt="ProPrint Logo" class="gallery-logo">
+                    <span class="logo-text">Pro<span>Print</span></span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN GALLERY CONTENT -->
+    <main class="gallery-main gallery-container">
+        
+        <!-- BENTO HIGHLIGHTS SECTION -->
+        <section class="highlights-section" id="highlights-section" style="display: none;">
+            <h2 class="section-subtitle-gallery"><i class="fa-solid fa-gem gold-color"></i> רגעים נבחרים</h2>
+            <div class="bento-grid" id="bento-grid">
+                <!-- Dynamic Highlights will be injected here -->
+            </div>
+        </section>
+
+        <!-- MAIN MASONRY GALLERY -->
+        <section class="all-photos-section">
+            <h2 class="section-subtitle-gallery" id="gallery-subtitle"><i class="fa-solid fa-images"></i> כל התמונות מהאירוע</h2>
+            
+            <!-- Loading Indicator -->
+            <div class="gallery-loader" id="gallery-loader">
+                <div class="spinner"></div>
+                <p>טוען תמונות מהענן...</p>
+            </div>
+
+            <!-- Error/Empty State -->
+            <div class="gallery-error" id="gallery-error" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <h3>לא הצלחנו לטעון את התמונות</h3>
+                <p id="error-message">אנא ודא שקישור התיקייה תקין והתיקייה מוגדרת כציבורית.</p>
+                <button class="btn btn-primary" onclick="window.location.reload()"><i class="fa-solid fa-rotate-right"></i> ניסיון חוזר</button>
+            </div>
+
+            <!-- Masonry Grid -->
+            <div class="masonry-grid" id="masonry-grid">
+                <!-- Images will be dynamically injected here -->
+            </div>
+
+            <!-- Infinite Scroll Loader / Load More Button -->
+            <div class="load-more-container" id="load-more-container" style="display: none;">
+                <button class="btn btn-outline-gold" id="load-more-btn">
+                    <i class="fa-solid fa-chevron-down"></i> טען תמונות נוספות
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- LIGHTBOX / MODAL WINDOW -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+        <!-- Close Button -->
+        <button class="lightbox-close" id="lightbox-close" aria-label="סגור תמונה"><i class="fa-solid fa-xmark"></i></button>
+        
+        <!-- Navigation Buttons -->
+        <button class="lightbox-nav prev" id="lightbox-prev" aria-label="תמונה קודמת"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="lightbox-nav next" id="lightbox-next" aria-label="תמונה הבאה"><i class="fa-solid fa-chevron-left"></i></button>
+
+        <!-- Lightbox Content -->
+        <div class="lightbox-content">
+            <div class="lightbox-image-wrapper">
+                <img src="" alt="תצוגה מוגדלת" id="lightbox-img">
+                <div class="lightbox-loader" id="lightbox-image-loader">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Footer / Actions -->
+        <div class="lightbox-footer">
+            <div class="lightbox-actions">
+                <a href="#" id="lightbox-download-btn" class="btn-lightbox-action download" target="_blank" download>
+                    <i class="fa-solid fa-download"></i> הורדה באיכות מלאה
+                </a>
+                <button id="lightbox-share-btn" class="btn-lightbox-action share">
+                    <i class="fa-solid fa-share-nodes"></i> שיתוף
+                </button>
+            </div>
+            <div class="lightbox-info">
+                <span id="lightbox-index">1 / 1</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification (for copy link, etc.) -->
+    <div class="toast" id="toast">הקישור הועתק בהצלחה!</div>
+
+    <!-- JavaScript Files -->
+    <script src="js/gallery.js"></script>
+</body>
+</html>

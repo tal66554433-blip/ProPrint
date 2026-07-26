@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחזיק מפתחות NFC חכם בעיצוב אישי | ProPrint</title>
+    <meta name="description" content="מחזיק מפתחות NFC חכם לאירועים וחתונות המקשר את האורחים בלחיצה לגלריית האירוע שלכם.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-page-container {
+            padding-top: 120px;
+            min-height: 100vh;
+            background: #0a0e17;
+            color: #E2E8F0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            align-items: start;
+        }
+        .product-media-panel {
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .main-display {
+            width: 100%;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0f172a;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        #canvas3d {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        .media-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .color-swatches {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            align-items: center;
+        }
+        .swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #FFFFFF;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .swatch:hover, .swatch.active {
+            transform: scale(1.15);
+            border-color: var(--gold-accent);
+        }
+        .swatch-white { background: #E2E8F0; }
+        .swatch-gold { background: #D4AF37; }
+        .swatch-blue { background: #0284C7; }
+        
+        .product-info-panel h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 0.5rem;
+        }
+        .product-category-tag {
+            color: var(--primary-accent);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+        .product-price-box {
+            background: rgba(2, 132, 199, 0.1);
+            border: 1px solid rgba(2, 132, 199, 0.2);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-price-box .price-amount {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-accent);
+        }
+        .product-specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .product-specs-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .product-specs-table td {
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+        }
+        .product-specs-table td:first-child {
+            font-weight: 700;
+            color: #94A3B8;
+            width: 35%;
+        }
+        
+        @media (max-width: 992px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .product-info-panel h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page-wrapper">
+        <!-- HEADER / NAVIGATION -->
+        <header class="scrolled">
+            <div class="container header-container">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="assets/logo.jpg" alt="ProPrint לוגו" style="height: 40px; border-radius: 6px;">
+                        <span class="logo-text">Pro<span>Print</span></span>
+                    </a>
+                </div>
+                <button class="menu-toggle" id="menu-toggle" aria-label="תפריט ניווט">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="nav-link">בית</a></li>
+                    <li><a href="index.html#products" class="nav-link">מוצרים ופתרונות</a></li>
+                    <li><a href="index.html#nfc-demo" class="nav-link">NFC חכם</a></li>
+                    <li><a href="index.html#about" class="nav-link">עלינו</a></li>
+                    <li><a href="index.html#contact" class="nav-link">צור קשר</a></li>
+                    <li><a href="https://www.instagram.com/proprint_3d_studio?igsh=ZG93NGtmbmpjajc1&utm_source=qr" target="_blank" class="nav-link" style="color: #fccc63;"><i class="fa-brands fa-instagram"></i> אינסטגרם</a></li>
+                    <li><a href="https://wa.me/972532708553" target="_blank" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> פנייה מהירה</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- PRODUCT DETAILS SECTION -->
+        <main class="product-page-container">
+            <div class="container">
+                <div class="product-grid">
+                    
+                    <!-- Media Gallery & 3D Viewer Panel -->
+                    <div class="product-media-panel">
+                        <div class="main-display">
+                            <img src="assets/keychain-angle.jpg" alt="מחזיק מפתחות NFC חכם" id="product-main-img">
+                            <div id="canvas3d"></div>
+                        </div>
+                        
+                        <div class="product-gallery-thumbnails" style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
+                            <img src="assets/keychain-angle.jpg" class="gallery-thumb active" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid var(--primary-accent); cursor: pointer; transition: all 0.2s;" onclick="changeMainImage('assets/keychain-angle.jpg', this)">
+                            <img src="assets/keychain-flat.jpg" class="gallery-thumb" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 2px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.2s;" onclick="changeMainImage('assets/keychain-flat.jpg', this)">
+                        </div>
+                        
+                        <div class="media-actions">
+                            <button class="btn btn-outline active" id="btn-show-photo" style="font-size: 0.85rem; padding: 0.5rem 1.2rem;"><i class="fa-solid fa-image"></i> תמונות המוצר</button>
+                            <button class="btn btn-outline" id="btn-show-3d" style="font-size: 0.85rem; padding: 0.5rem 1.2rem;"><i class="fa-solid fa-cube"></i> סימולטור תלת-ממד (תצוגה חיה)</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Info & Description Panel -->
+                    <div class="product-info-panel">
+                        <span class="product-category-tag">טכנולוגיה, אירועים ומזכרות</span>
+                        <h1>מחזיק מפתחות NFC חכם לאירועים</h1>
+                        <p class="product-desc" style="font-size: 1.1rem; line-height: 1.7; color: #94A3B8; margin-bottom: 2rem;">
+                            מחזיק מפתחות אינטראקטיבי ומהודר המשלב שבב תקשורת NFC חכם מובנה ומתוחכם. משמש כמזכרת יוקרתית מהחתונה או האירוע העסקי ושער דיגיטלי אינטואיטיבי עבור האורחים. בקירוב של המכשיר הנייד למחזיק המפתחות, נפתח מיידית אלבום התמונות של האירוע, סרטון ההסבר או עמוד האינסטגרם שלכם ללא צורך בהורדת אפליקציה!
+                        </p>
+                        
+                        <div class="product-price-box">
+                            <div>
+                                <span style="font-size: 0.8rem; color: #94A3B8; display: block;">עיצוב בהתאמה אישית</span>
+                                <span style="font-size: 1.05rem; font-weight: 700; color: #FFFFFF;">מינימום הזמנה: 20 יחידות</span>
+                            </div>
+                            <span class="price-amount" style="color: var(--primary-accent);">הצעת מחיר אישית</span>
+                        </div>
+                        
+                        <h4 style="font-family: var(--font-heading); color: #FFFFFF; font-size: 1.2rem; margin-bottom: 0.8rem;">תכונות עיקריות:</h4>
+                        <ul class="product-features" style="margin-bottom: 2.5rem;">
+                            <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> שבב NFC מובנה ועמיד בפני שריטות ובלאי</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> עיצוב אישי של שמות הזוג, תאריכים או לוגו החברה</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> שיוך קישור אינטרנט דינמי הניתן לעדכון בכל עת</li>
+                            <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> פתרון ירוק, דיגיטלי וחדשני שמחזיק לאורך שנים</li>
+                        </ul>
+                        
+                        <a href="https://api.whatsapp.com/send?phone=972532708553&text=%D7%A9%D7%9C%D7%95%D7%9D%20ProPrint%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%91%D7%9C%D7%AA%20%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%9E%D7%97%D7%96%D7%99%D7%A7%D7%99%20%D7%9E%D7%A4%D7%AA%D7%97%D7%95%D7%AA%20%D7%97%D7%9B%D7%95%D7%9E%D7%99%D7%9D%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2%D7%99%D7%9D." target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center; font-size: 1.1rem; padding: 1rem;"><i class="fa-brands fa-whatsapp"></i> קבלת הצעת מחיר ב-WhatsApp</a>
+                        
+                        <table class="product-specs-table">
+                            <tbody>
+                                <tr>
+                                    <td>טכנולוגיית ייצור</td>
+                                    <td>הדפסה תלת-ממדית מתקדמת + הטמעת חומרה</td>
+                                </tr>
+                                <tr>
+                                    <td>סוג שבב (NFC Chip)</td>
+                                    <td>שבב NFC חכם (תאימות מלאה ל-iOS ו-Android)</td>
+                                </tr>
+                                <tr>
+                                    <td>מידות סטנדרטיות</td>
+                                    <td>קוטר 4.5 ס"מ | עובי 4 מ"מ | משקל קל במיוחד</td>
+                                </tr>
+                                <tr>
+                                    <td>עמידות</td>
+                                    <td>שבב יצוק בתוך הפלסטיק להגנה מרבית מפני שריטות ובלאי</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+            <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <!-- Column 1: Main Menu -->
+                <div>
+                    <h4 class="footer-title">תפריט ראשי</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#home">מסך בית</a></li>
+                        <li><a href="index.html#gallery-section">גלריית עבודות</a></li>
+                        <li><a href="index.html#about">אודות החברה</a></li>
+                        <li><a href="index.html#nfc-demo">איך זה עובד (NFC)</a></li>
+                        <li><a href="index.html#contact">צור קשר</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Products -->
+                <div>
+                    <h4 class="footer-title">המוצרים שלנו</h4>
+                    <ul class="footer-links">
+                        <li><a href="product-table-stand.html">מעמד שולחן מעוצב</a></li>
+                        <li><a href="product-keychain.html">מחזיק מפתחות NFC חכם</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Useful Information -->
+                <div>
+                    <h4 class="footer-title">מידע שימושי</h4>
+                    <ul class="footer-links">
+                        <li><a href="refunds.html">מדיניות החזרים וביטולים</a></li>
+                        <li><a href="shipping.html">מדיניות משלוחים</a></li>
+                        <li><a href="privacy.html">מדיניות פרטיות</a></li>
+                        <li><a href="faq.html">שאלות נפוצות</a></li>
+                        <li><a href="terms.html">תקנון ותנאי שימוש באתר</a></li>
+                        <li><a href="accessibility.html">הצהרת נגישות</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Contact Info -->
+                <div>
+                    <h4 class="footer-title">צור קשר</h4>
+                    <ul class="footer-contact-list">
+                        <li><i class="fa-solid fa-phone"></i> טלפון: <a href="tel:0532708553">053-2708553</a></li>
+                        <li><i class="fa-solid fa-envelope"></i> אימייל: <a href="mailto:proprint.co.il@gmail.com">proprint.co.il@gmail.com</a></li>
+                        <li><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> אינסטגרם: <a href="https://www.instagram.com/proprint_3d_studio?igsh=ZG93NGtmbmpjajc1&utm_source=qr" target="_blank">@proprint_3d_studio</a></li>
+                        <li><i class="fa-solid fa-location-dot"></i> משלוחים לכל הארץ</li>
+                        <li><i class="fa-solid fa-clock"></i> א׳ - ה׳: 09:00 - 18:00</li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: About & Brand (Left Column in RTL) -->
+                <div class="footer-about">
+                    <img src="assets/logo.jpg" alt="ProPrint לוגו" class="footer-logo">
+                    <p class="brand-tagline" style="color: var(--gold-accent); font-weight: 700; margin-top: 0.5rem; font-size: 0.95rem;">מניעים לפעולה בתלת-ממד ובדיגיטל</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5; color: #94A3B8;">שילוב חומרה חכמה והדפסת תלת-ממד מתקדמת לאירועים ממותגים.</p>
+                    <div class="payment-methods" style="display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 6px; display: inline-flex; align-items: center; justify-content: center; height: 24px; width: 38px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"><i class="fa-brands fa-apple-pay" style="color: #FFFFFF; font-size: 1.25rem;"></i></span>
+                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 6px; display: inline-flex; align-items: center; justify-content: center; height: 24px; width: 38px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"><i class="fa-brands fa-google-pay" style="color: #FFFFFF; font-size: 1.25rem;"></i></span>
+                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 6px; display: inline-flex; align-items: center; justify-content: center; height: 24px; width: 38px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"><i class="fa-brands fa-cc-mastercard" style="color: #FFFFFF; font-size: 1.15rem;"></i></span>
+                        <span style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 6px; display: inline-flex; align-items: center; justify-content: center; height: 24px; width: 38px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"><i class="fa-brands fa-cc-visa" style="color: #FFFFFF; font-size: 1.15rem;"></i></span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 ProPrint 3D Studio. כל הזכויות שמורות. פיתוח ועיצוב פרימיום.</p>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <!-- Three.js Library CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Product Specific Interaction Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainImg = document.getElementById('product-main-img');
+            const canvasContainer = document.getElementById('canvas3d');
+            const btnShowPhoto = document.getElementById('btn-show-photo');
+            const btnShow3d = document.getElementById('btn-show-3d');
+            
+            let scene, camera, renderer, model;
+            let is3dInitialized = false;
+
+            // Thumbnail gallery image toggle
+            window.changeMainImage = function(url, thumb) {
+                showPhotoView();
+                
+                mainImg.style.opacity = '0';
+                setTimeout(() => {
+                    mainImg.src = url;
+                    mainImg.style.opacity = '1';
+                }, 150);
+                
+                document.querySelectorAll('.gallery-thumb').forEach(t => {
+                    t.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    t.classList.remove('active');
+                });
+                thumb.style.borderColor = 'var(--primary-accent)';
+                thumb.classList.add('active');
+            };
+
+            btnShowPhoto.addEventListener('click', showPhotoView);
+            btnShow3d.addEventListener('click', show3dView);
+
+            function showPhotoView() {
+                btnShow3d.classList.remove('active');
+                btnShowPhoto.classList.add('active');
+                canvasContainer.style.display = 'none';
+                mainImg.style.display = 'block';
+            }
+
+            function show3dView() {
+                btnShowPhoto.classList.remove('active');
+                btnShow3d.classList.add('active');
+                mainImg.style.display = 'none';
+                canvasContainer.style.display = 'block';
+                
+                if (!is3dInitialized) {
+                    init3dViewer();
+                }
+            }
+
+            // Simple Three.js placeholder renderer representing a keychain 3D model
+            function init3dViewer() {
+                const width = canvasContainer.clientWidth;
+                const height = canvasContainer.clientHeight || 380;
+                
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x0f172a);
+                
+                camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+                camera.position.set(0, 0, 5);
+                
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(width, height);
+                canvasContainer.appendChild(renderer.domElement);
+                
+                // Add lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+                
+                const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+                dirLight1.position.set(3, 5, 5);
+                scene.add(dirLight1);
+
+                const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.4);
+                dirLight2.position.set(-3, -5, -5);
+                scene.add(dirLight2);
+                
+                // Build a simple 3D Keychain Tag Model (Cylinder + Ring)
+                let colorHex = 0xe2e8f0; // White/Silver
+                const activeSwatch = document.querySelector('.swatch.active');
+                if (activeSwatch) {
+                    if (activeSwatch.classList.contains('swatch-gold')) colorHex = 0xd4af37;
+                    if (activeSwatch.classList.contains('swatch-blue')) colorHex = 0x0284c7;
+                }
+
+                const material = new THREE.MeshStandardMaterial({
+                    color: colorHex,
+                    roughness: 0.4,
+                    metalness: 0.7
+                });
+                
+                // The circular tag
+                const tagGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.12, 32);
+                const tag = new THREE.Mesh(tagGeo, material);
+                tag.rotation.x = Math.PI / 2; // Face the camera
+                
+                // The metal ring
+                const ringGeo = new THREE.TorusGeometry(0.25, 0.04, 8, 24);
+                const ringMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xcccccc,
+                    roughness: 0.1,
+                    metalness: 1.0
+                });
+                const ring = new THREE.Mesh(ringGeo, ringMaterial);
+                ring.position.y = 1.35;
+                
+                // Group them
+                model = new THREE.Group();
+                model.add(tag);
+                model.add(ring);
+                scene.add(model);
+                
+                camera.lookAt(0, 0, 0);
+                
+                // Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+                    model.rotation.y += 0.012;
+                    model.rotation.x = Math.sin(Date.now() * 0.001) * 0.15;
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                is3dInitialized = true;
+                
+                // Resize listener
+                window.addEventListener('resize', () => {
+                    const w = canvasContainer.clientWidth;
+                    const h = canvasContainer.clientHeight || 380;
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
