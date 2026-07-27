@@ -2090,10 +2090,18 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    .nfc-visual {
+        height: 560px;
+    }
+    
+    .phone-wrapper {
+        margin-top: 60px;
+    }
+    
     .nfc-tag-demo {
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -20px;
+        left: 90px;
+        top: -65px;
+        bottom: auto;
         width: 70px;
         height: 70px;
     }

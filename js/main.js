@@ -83,7 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Start scan animation
-            nfcTag.style.transform = 'translate(200px, -350px) scale(0.8)';
+            if (window.innerWidth <= 992) {
+                nfcTag.style.transform = 'translateY(55px) scale(0.8)';
+            } else {
+                nfcTag.style.transform = 'translate(200px, -350px) scale(0.8)';
+            }
             nfcWaves.classList.add('active');
             
             setTimeout(() => {
