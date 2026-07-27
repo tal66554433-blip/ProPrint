@@ -70,7 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetNfcDemo() {
         if (phoneScreenContent) phoneScreenContent.style.display = 'none';
         if (phoneScreenDefault) phoneScreenDefault.style.display = 'flex';
-        if (nfcTag) nfcTag.style.transform = 'none';
+        if (nfcTag) {
+            nfcTag.style.transform = 'none';
+            nfcTag.style.opacity = '1';
+            nfcTag.style.pointerEvents = 'auto';
+        }
         if (nfcWaves) nfcWaves.classList.remove('active');
         isDemoScanned = false;
     }
@@ -84,14 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Start scan animation
             if (window.innerWidth <= 992) {
-                nfcTag.style.transform = 'translateY(55px) scale(0.8)';
+                nfcTag.style.transform = 'translateY(95px) scale(0.8)';
             } else {
                 nfcTag.style.transform = 'translate(200px, -350px) scale(0.8)';
             }
             nfcWaves.classList.add('active');
             
             setTimeout(() => {
-                // Return tag to resting spot
+                // Fade out key tag after scan completes so it doesn't block the screen
+                nfcTag.style.opacity = '0';
+                nfcTag.style.pointerEvents = 'none';
                 nfcTag.style.transform = 'none';
                 nfcWaves.classList.remove('active');
 

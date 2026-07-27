@@ -216,6 +216,7 @@ header:not(.terms-header).scrolled .header-container {
     gap: 0.8rem;
     text-decoration: none;
     outline: none !important;
+    direction: ltr; /* Force image on left, text on right */
 }
 
 .logo:focus, .logo:active, .logo *:focus, .logo *:active {
@@ -224,7 +225,7 @@ header:not(.terms-header).scrolled .header-container {
 }
 
 .logo img {
-    height: 50px !important;
+    height: 42px !important;
     width: auto !important;
     border-radius: 8px !important;
     object-fit: cover !important;
@@ -233,13 +234,13 @@ header:not(.terms-header).scrolled .header-container {
 }
 
 header:not(.terms-header).scrolled .logo img {
-    height: 40px !important;
+    height: 34px !important;
 }
 
 .logo-text {
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     color: #FFFFFF;
     letter-spacing: 0.5px;
 }
@@ -2091,16 +2092,16 @@ footer {
     }
     
     .nfc-visual {
-        height: 560px;
+        height: 580px;
     }
     
     .phone-wrapper {
-        margin-top: 60px;
+        margin-top: 100px;
     }
     
     .nfc-tag-demo {
         left: 90px;
-        top: -65px;
+        top: -110px;
         bottom: auto;
         width: 70px;
         height: 70px;
