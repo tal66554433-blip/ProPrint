@@ -232,23 +232,15 @@
                         </ul>
                         <!-- CUSTOMIZATION PANEL (NFC Keychain) -->
                         <div class="customization-panel" style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
-                            <h4 style="font-family: var(--font-heading); color: #FFFFFF; font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--gold-accent); margin-left: 0.5rem;"></i>התאמה אישית של מחזיק המפתחות</h4>
+                            <h4 style="font-family: var(--font-heading); color: #FFFFFF; font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-palette" style="color: var(--gold-accent); margin-left: 0.5rem;"></i>בחר צבע למחזיק המפתחות</h4>
                             
                             <!-- Color Swatches -->
-                            <div style="margin-bottom: 1.2rem;">
-                                <label style="display: block; font-size: 0.85rem; color: #94A3B8; margin-bottom: 0.6rem;">1. בחר צבע מבוקש (זהב / כסף / כחול):</label>
+                            <div style="margin-bottom: 0.5rem;">
                                 <div class="color-swatches" style="margin-top: 0.5rem;">
                                     <div class="swatch swatch-gold active" data-color="0xd4af37" title="זהב משי (Silk Gold)"></div>
                                     <div class="swatch swatch-white" data-color="0xe2e8f0" title="כסף משי (Silk Silver)"></div>
                                     <div class="swatch swatch-blue" data-color="0x0284c7" title="כחול מטאלי (Metallic Blue)"></div>
                                 </div>
-                            </div>
-                            
-                            <!-- Custom Text Input -->
-                            <div>
-                                <label for="keychain-custom-text" style="display: block; font-size: 0.85rem; color: #94A3B8; margin-bottom: 0.6rem;">2. הקלד שם/כיתוב אישי (תצוגת סימולטור):</label>
-                                <input type="text" id="keychain-custom-text" placeholder="לדוגמה: דן & רוני" maxlength="15" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); color: #FFFFFF; font-family: var(--font-body); font-size: 1rem; transition: border-color 0.2s;" oninput="update3DText(this.value)">
-                                <span style="font-size: 0.75rem; color: #64748B; display: block; margin-top: 0.4rem;">* הקלד כיתוב כדי להפעיל את פונקציית העדכון החדשה.</span>
                             </div>
                         </div>
                         
@@ -409,47 +401,6 @@
                 }
             }
 
-            // --- CUSTOMIZATION BASE (FOR FUTURE REAL-TIME 3D TEXT PROJECTION) ---
-            window.update3DText = function(text) {
-                console.log("סימולטור: מעדכן כיתוב אישי ל-", text);
-                
-                // בסיס מוכן עבורך להמשך פיתוח:
-                // להלן ההסבר המלא והקוד הנדרש להשלמת כתיבת השם בלייב על ה-3D:
-                /*
-                איך מציגים את הטקסט שהוזן על גבי מחזיק המפתחות ב-3D?
-                השיטה המודרנית והנוחה ביותר היא שימוש ב-CanvasTexture:
-                
-                1. יצירת קנבס HTML נסתר וכתיבת השם עליו:
-                   const canvas = document.createElement('canvas');
-                   canvas.width = 512;
-                   canvas.height = 512;
-                   const ctx = canvas.getContext('2d');
-                   
-                2. ציור הרקע (למשל צבע פלסטיק) והטקסט בתוכו:
-                   ctx.fillStyle = "#0f172a"; // צבע רקע
-                   ctx.fillRect(0, 0, 512, 512);
-                   ctx.fillStyle = "#ffffff"; // צבע הטקסט (שם הלקוח)
-                   ctx.font = "Bold 50px Assistant";
-                   ctx.textAlign = "center";
-                   ctx.textBaseline = "middle";
-                   ctx.fillText(text, 256, 256);
-                   
-                3. המרה לטקסטורה ב-Three.js ורענון המודל:
-                   const textTexture = new THREE.CanvasTexture(canvas);
-                   textTexture.needsUpdate = true;
-                   
-                4. החלת הטקסטורה על חלק המשטח של השם במודל ה-GLB:
-                   if (model) {
-                       model.traverse(child => {
-                           // הערה: נדרש לבדוק מהו שם ה-Mesh המיועד לכיתוב במודל שלך (למשל text_plate)
-                           if (child.isMesh && child.name.includes("text")) {
-                               child.material.map = textTexture;
-                               child.material.needsUpdate = true;
-                           }
-                       });
-                   }
-                */
-            };
 
             // Setup Custom Swatch Listeners for Color Toggle
             function setupColorSwatches() {
