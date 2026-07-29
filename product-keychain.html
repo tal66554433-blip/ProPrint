@@ -230,8 +230,29 @@
                             <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> שיוך קישור אינטרנט או גלריית תמונות אישית</li>
                             <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> פתרון ירוק, דיגיטלי וחדשני שמחזיק לאורך שנים</li>
                         </ul>
+                        <!-- CUSTOMIZATION PANEL (NFC Keychain) -->
+                        <div class="customization-panel" style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                            <h4 style="font-family: var(--font-heading); color: #FFFFFF; font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--gold-accent); margin-left: 0.5rem;"></i>התאמה אישית של מחזיק המפתחות</h4>
+                            
+                            <!-- Color Swatches -->
+                            <div style="margin-bottom: 1.2rem;">
+                                <label style="display: block; font-size: 0.85rem; color: #94A3B8; margin-bottom: 0.6rem;">1. בחר צבע מבוקש (זהב / כסף / כחול):</label>
+                                <div class="color-swatches" style="margin-top: 0.5rem;">
+                                    <div class="swatch swatch-gold active" data-color="0xd4af37" title="זהב משי (Silk Gold)"></div>
+                                    <div class="swatch swatch-white" data-color="0xe2e8f0" title="כסף משי (Silk Silver)"></div>
+                                    <div class="swatch swatch-blue" data-color="0x0284c7" title="כחול מטאלי (Metallic Blue)"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Text Input -->
+                            <div>
+                                <label for="keychain-custom-text" style="display: block; font-size: 0.85rem; color: #94A3B8; margin-bottom: 0.6rem;">2. הקלד שם/כיתוב אישי (תצוגת סימולטור):</label>
+                                <input type="text" id="keychain-custom-text" placeholder="לדוגמה: דן & רוני" maxlength="15" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); color: #FFFFFF; font-family: var(--font-body); font-size: 1rem; transition: border-color 0.2s;" oninput="update3DText(this.value)">
+                                <span style="font-size: 0.75rem; color: #64748B; display: block; margin-top: 0.4rem;">* הקלד כיתוב כדי להפעיל את פונקציית העדכון החדשה.</span>
+                            </div>
+                        </div>
                         
-                        <a href="https://api.whatsapp.com/send?phone=972532708553&text=%D7%A9%D7%9C%D7%95%D7%9D%20ProPrint%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A7%D7%91%D7%9C%D7%AA%20%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%9E%D7%97%D7%96%D7%99%D7%A7%D7%99%20%D7%9E%D7%A4%D7%AA%D7%97%D7%95%D7%AA%20%D7%97%D7%9B%D7%95%D7%9E%D7%99%D7%9D%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2%D7%99%D7%9D." target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center; font-size: 1.1rem; padding: 1rem;"><i class="fa-brands fa-whatsapp"></i> קבלת הצעת מחיר ב-WhatsApp</a>
+                        <a href="https://api.whatsapp.com/send?phone=972532708553&text=%D7%A9%D7%9C%D7%95%D7%9D%20ProPrint%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%9E%D7%97%D7%96%D7%99%D7%A7%D7%99%20%D7%9E%D7%A4%D7%AA%D7%97%D7%95%D7%AA%20%D7%97%D7%9B%D7%95%D7%9E%D7%99%D7%9D%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2%D7%99%D7%9D." target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center; font-size: 1.1rem; padding: 1rem;"><i class="fa-brands fa-whatsapp"></i> קבלת הצעת מחיר ב-WhatsApp</a>
                         
                         <table class="product-specs-table">
                             <tbody>
@@ -334,6 +355,8 @@
 
     <!-- Three.js Library CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="js/main.js"></script>
     
     <!-- Product Specific Interaction Script -->
@@ -344,7 +367,7 @@
             const btnShowPhoto = document.getElementById('btn-show-photo');
             const btnShow3d = document.getElementById('btn-show-3d');
             
-            let scene, camera, renderer, model;
+            let scene, camera, renderer, model, controls;
             let is3dInitialized = false;
 
             // Thumbnail gallery image toggle
@@ -386,80 +409,222 @@
                 }
             }
 
-            // Simple Three.js placeholder renderer representing a keychain 3D model
+            // --- CUSTOMIZATION BASE (FOR FUTURE REAL-TIME 3D TEXT PROJECTION) ---
+            window.update3DText = function(text) {
+                console.log("סימולטור: מעדכן כיתוב אישי ל-", text);
+                
+                // בסיס מוכן עבורך להמשך פיתוח:
+                // להלן ההסבר המלא והקוד הנדרש להשלמת כתיבת השם בלייב על ה-3D:
+                /*
+                איך מציגים את הטקסט שהוזן על גבי מחזיק המפתחות ב-3D?
+                השיטה המודרנית והנוחה ביותר היא שימוש ב-CanvasTexture:
+                
+                1. יצירת קנבס HTML נסתר וכתיבת השם עליו:
+                   const canvas = document.createElement('canvas');
+                   canvas.width = 512;
+                   canvas.height = 512;
+                   const ctx = canvas.getContext('2d');
+                   
+                2. ציור הרקע (למשל צבע פלסטיק) והטקסט בתוכו:
+                   ctx.fillStyle = "#0f172a"; // צבע רקע
+                   ctx.fillRect(0, 0, 512, 512);
+                   ctx.fillStyle = "#ffffff"; // צבע הטקסט (שם הלקוח)
+                   ctx.font = "Bold 50px Assistant";
+                   ctx.textAlign = "center";
+                   ctx.textBaseline = "middle";
+                   ctx.fillText(text, 256, 256);
+                   
+                3. המרה לטקסטורה ב-Three.js ורענון המודל:
+                   const textTexture = new THREE.CanvasTexture(canvas);
+                   textTexture.needsUpdate = true;
+                   
+                4. החלת הטקסטורה על חלק המשטח של השם במודל ה-GLB:
+                   if (model) {
+                       model.traverse(child => {
+                           // הערה: נדרש לבדוק מהו שם ה-Mesh המיועד לכיתוב במודל שלך (למשל text_plate)
+                           if (child.isMesh && child.name.includes("text")) {
+                               child.material.map = textTexture;
+                               child.material.needsUpdate = true;
+                           }
+                       });
+                   }
+                */
+            };
+
+            // Setup Custom Swatch Listeners for Color Toggle
+            function setupColorSwatches() {
+                const swatches = document.querySelectorAll('.swatch');
+                swatches.forEach(swatch => {
+                    swatch.addEventListener('click', (e) => {
+                        swatches.forEach(s => s.classList.remove('active'));
+                        swatch.classList.add('active');
+                        
+                        const colorHex = swatch.getAttribute('data-color');
+                        updateModelColor(colorHex);
+                    });
+                });
+            }
+
+            // Update color of loaded GLB model meshes
+            function updateModelColor(colorHex) {
+                if (!model) return;
+                const color = new THREE.Color(parseInt(colorHex));
+                
+                model.traverse(child => {
+                    if (child.isMesh) {
+                        // Apply color to the main body
+                        // Tip: in blender, name the customizable body mesh (e.g., "Plastic_Body")
+                        // so you only color the plastic and keep metal ring or logo unchanged:
+                        // if (child.name.includes("Plastic")) { ... }
+                        
+                        // Fallback: If meshes are separate, color meshes that are not metal/torus rings
+                        if (child.material && !child.name.toLowerCase().includes("ring") && !child.name.toLowerCase().includes("torus")) {
+                            child.material.color.copy(color);
+                            child.material.roughness = 0.4;
+                            child.material.metalness = 0.6;
+                            child.material.needsUpdate = true;
+                        }
+                    }
+                });
+            }
+
+            // WebGL / Three.js Renderer and Model Loader
             function init3dViewer() {
                 const width = canvasContainer.clientWidth;
                 const height = canvasContainer.clientHeight || 380;
                 
+                // 1. Create Scene
                 scene = new THREE.Scene();
                 scene.background = new THREE.Color(0x0f172a);
                 
+                // 2. Create Camera
                 camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-                camera.position.set(0, 0, 5);
+                camera.position.set(0, 0, 4);
                 
+                // 3. Create WebGL Renderer
                 renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setSize(width, height);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.shadowMap.enabled = true;
                 canvasContainer.appendChild(renderer.domElement);
                 
-                // Add lights
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                // 4. OrbitControls for zoom and rotation
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.minDistance = 1.5;
+                controls.maxDistance = 8;
+                
+                // 5. Lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
                 scene.add(ambientLight);
                 
-                const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
-                dirLight1.position.set(3, 5, 5);
+                const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.85);
+                dirLight1.position.set(5, 8, 5);
                 scene.add(dirLight1);
 
-                const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.4);
-                dirLight2.position.set(-3, -5, -5);
+                const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.35);
+                dirLight2.position.set(-5, -8, -5);
                 scene.add(dirLight2);
-                
-                // Build a simple 3D Keychain Tag Model (Cylinder + Ring)
-                let colorHex = 0xe2e8f0; // White/Silver
-                const activeSwatch = document.querySelector('.swatch.active');
-                if (activeSwatch) {
-                    if (activeSwatch.classList.contains('swatch-gold')) colorHex = 0xd4af37;
-                    if (activeSwatch.classList.contains('swatch-blue')) colorHex = 0x0284c7;
-                }
 
-                const material = new THREE.MeshStandardMaterial({
-                    color: colorHex,
-                    roughness: 0.4,
-                    metalness: 0.7
-                });
+                const pointLight = new THREE.PointLight(0xffffff, 0.4, 10);
+                pointLight.position.set(0, 0, 3);
+                scene.add(pointLight);
                 
-                // The circular tag
-                const tagGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.12, 32);
-                const tag = new THREE.Mesh(tagGeo, material);
-                tag.rotation.x = Math.PI / 2; // Face the camera
+                // 6. Setup Swatches
+                setupColorSwatches();
                 
-                // The metal ring
-                const ringGeo = new THREE.TorusGeometry(0.25, 0.04, 8, 24);
-                const ringMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xcccccc,
-                    roughness: 0.1,
-                    metalness: 1.0
-                });
-                const ring = new THREE.Mesh(ringGeo, ringMaterial);
-                ring.position.y = 1.35;
+                // 7. Load GLB Model
+                const loader = new THREE.GLTFLoader();
                 
-                // Group them
-                model = new THREE.Group();
-                model.add(tag);
-                model.add(ring);
-                scene.add(model);
+                loader.load('tal nfc project.glb', 
+                    (gltf) => {
+                        model = gltf.scene;
+                        
+                        // Centering model and scaling
+                        const box = new THREE.Box3().setFromObject(model);
+                        const center = box.getCenter(new THREE.Vector3());
+                        const size = box.getSize(new THREE.Vector3());
+                        
+                        // Shift model pivot to its bounding box center
+                        model.position.x += (model.position.x - center.x);
+                        model.position.y += (model.position.y - center.y);
+                        model.position.z += (model.position.z - center.z);
+                        
+                        // Scale to visual standard
+                        const maxDim = Math.max(size.x, size.y, size.z);
+                        const scaleFactor = 1.6 / maxDim;
+                        model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+                        
+                        scene.add(model);
+                        
+                        // Apply initial active swatch color to the model
+                        const activeSwatch = document.querySelector('.swatch.active');
+                        if (activeSwatch) {
+                            const initialColorHex = activeSwatch.getAttribute('data-color');
+                            updateModelColor(initialColorHex);
+                        }
+                    }, 
+                    // OnProgress
+                    undefined, 
+                    // OnError
+                    (error) => {
+                        console.error('CORS or loading error. Falling back to mock cylindrical model.', error);
+                        createFallbackMockModel();
+                    }
+                );
+                
+                // Fallback Model Generator (If GLB fails to load locally due to CORS file:// policy)
+                function createFallbackMockModel() {
+                    const tagMaterial = new THREE.MeshStandardMaterial({
+                        color: 0xd4af37, // Default Gold
+                        roughness: 0.4,
+                        metalness: 0.7
+                    });
+                    
+                    const tagGeo = new THREE.CylinderGeometry(1.0, 1.0, 0.12, 32);
+                    const tag = new THREE.Mesh(tagGeo, tagMaterial);
+                    tag.rotation.x = Math.PI / 2;
+                    
+                    const ringGeo = new THREE.TorusGeometry(0.22, 0.035, 8, 24);
+                    const ringMaterial = new THREE.MeshStandardMaterial({
+                        color: 0xdde2e5,
+                        roughness: 0.1,
+                        metalness: 0.95
+                    });
+                    const ring = new THREE.Mesh(ringGeo, ringMaterial);
+                    ring.position.y = 1.15;
+                    
+                    model = new THREE.Group();
+                    model.add(tag);
+                    model.add(ring);
+                    scene.add(model);
+                    
+                    // Apply initial active swatch color to fallback model
+                    const activeSwatch = document.querySelector('.swatch.active');
+                    if (activeSwatch) {
+                        const initialColorHex = activeSwatch.getAttribute('data-color');
+                        updateModelColor(initialColorHex);
+                    }
+                }
                 
                 camera.lookAt(0, 0, 0);
+                is3dInitialized = true;
                 
                 // Animation loop
                 function animate() {
                     requestAnimationFrame(animate);
-                    model.rotation.y += 0.012;
-                    model.rotation.x = Math.sin(Date.now() * 0.001) * 0.15;
+                    
+                    // Auto-rotate model slowly if controls are not actively dragging
+                    if (model && !controls.state === -1) {
+                        model.rotation.y += 0.007;
+                    }
+                    
+                    controls.update();
                     renderer.render(scene, camera);
                 }
                 
                 animate();
-                is3dInitialized = true;
                 
                 // Resize listener
                 window.addEventListener('resize', () => {
