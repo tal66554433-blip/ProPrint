@@ -423,17 +423,25 @@
                 
                 model.traverse(child => {
                     if (child.isMesh) {
-                        // Apply color to the main body
-                        // Tip: in blender, name the customizable body mesh (e.g., "Plastic_Body")
-                        // so you only color the plastic and keep metal ring or logo unchanged:
-                        // if (child.name.includes("Plastic")) { ... }
-                        
-                        // Fallback: If meshes are separate, color meshes that are not metal/torus rings
-                        if (child.material && !child.name.toLowerCase().includes("ring") && !child.name.toLowerCase().includes("torus")) {
-                            child.material.color.copy(color);
-                            child.material.roughness = 0.4;
-                            child.material.metalness = 0.6;
-                            child.material.needsUpdate = true;
+                        const name = child.name.toLowerCase();
+                        // Exclude non-customizable parts like metal rings, logos, text, or graphics
+                        const isExcluded = name.includes("ring") || 
+                                           name.includes("torus") || 
+                                           name.includes("logo") || 
+                                           name.includes("text") || 
+                                           name.includes("print") || 
+                                           name.includes("graphic") || 
+                                           name.includes("label") || 
+                                           name.includes("nfc");
+                                           
+                        if (child.material && !isExcluded) {
+                            // If the material has a texture map (like a baked logo), preserve it
+                            if (!child.material.map) {
+                                child.material.color.copy(color);
+                                child.material.roughness = 0.4;
+                                child.material.metalness = 0.6;
+                                child.material.needsUpdate = true;
+                            }
                         }
                     }
                 });
@@ -508,13 +516,9 @@
                         model.scale.set(scaleFactor, scaleFactor, scaleFactor);
                         
                         scene.add(model);
-                        
-                        // Apply initial active swatch color to the model
-                        const activeSwatch = document.querySelector('.swatch.active');
-                        if (activeSwatch) {
-                            const initialColorHex = activeSwatch.getAttribute('data-color');
-                            updateModelColor(initialColorHex);
-                        }
+
+                        // Model loaded in its original baked textures/colors.
+                        // Swatches will recolor only customizable parts on click.
                     }, 
                     // OnProgress
                     undefined, 
