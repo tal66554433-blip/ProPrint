@@ -230,19 +230,7 @@
                             <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> שיוך קישור אינטרנט או גלריית תמונות אישית</li>
                             <li><i class="fa-solid fa-circle-check" style="color: var(--primary-accent);"></i> פתרון ירוק, דיגיטלי וחדשני שמחזיק לאורך שנים</li>
                         </ul>
-                        <!-- CUSTOMIZATION PANEL (NFC Keychain) -->
-                        <div class="customization-panel" style="background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
-                            <h4 style="font-family: var(--font-heading); color: #FFFFFF; font-size: 1.1rem; margin-bottom: 1rem;"><i class="fa-solid fa-palette" style="color: var(--gold-accent); margin-left: 0.5rem;"></i>בחר צבע למחזיק המפתחות</h4>
-                            
-                            <!-- Color Swatches -->
-                            <div style="margin-bottom: 0.5rem;">
-                                <div class="color-swatches" style="margin-top: 0.5rem;">
-                                    <div class="swatch swatch-gold active" data-color="0xd4af37" title="זהב משי (Silk Gold)"></div>
-                                    <div class="swatch swatch-white" data-color="0xe2e8f0" title="כסף משי (Silk Silver)"></div>
-                                    <div class="swatch swatch-blue" data-color="0x0284c7" title="כחול מטאלי (Metallic Blue)"></div>
-                                </div>
-                            </div>
-                        </div>
+
                         
                         <a href="https://api.whatsapp.com/send?phone=972532708553&text=%D7%A9%D7%9C%D7%95%D7%9D%20ProPrint%2C%20%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%9F%20%D7%91%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%A2%D7%91%D7%95%D7%A8%20%D7%9E%D7%97%D7%96%D7%99%D7%A7%D7%99%20%D7%9E%D7%A4%D7%AA%D7%97%D7%95%D7%AA%20%D7%97%D7%9B%D7%95%D7%9E%D7%99%D7%9D%20%D7%9C%D7%90%D7%99%D7%A8%D7%95%D7%A2%D7%99%D7%9D." target="_blank" class="btn btn-primary" style="width: 100%; text-align: center; justify-content: center; font-size: 1.1rem; padding: 1rem;"><i class="fa-brands fa-whatsapp"></i> קבלת הצעת מחיר ב-WhatsApp</a>
                         
@@ -402,50 +390,6 @@
             }
 
 
-            // Setup Custom Swatch Listeners for Color Toggle
-            function setupColorSwatches() {
-                const swatches = document.querySelectorAll('.swatch');
-                swatches.forEach(swatch => {
-                    swatch.addEventListener('click', (e) => {
-                        swatches.forEach(s => s.classList.remove('active'));
-                        swatch.classList.add('active');
-                        
-                        const colorHex = swatch.getAttribute('data-color');
-                        updateModelColor(colorHex);
-                    });
-                });
-            }
-
-            // Update color of loaded GLB model meshes
-            function updateModelColor(colorHex) {
-                if (!model) return;
-                const color = new THREE.Color(parseInt(colorHex));
-                
-                model.traverse(child => {
-                    if (child.isMesh) {
-                        const name = child.name.toLowerCase();
-                        // Exclude non-customizable parts like metal rings, logos, text, or graphics
-                        const isExcluded = name.includes("ring") || 
-                                           name.includes("torus") || 
-                                           name.includes("logo") || 
-                                           name.includes("text") || 
-                                           name.includes("print") || 
-                                           name.includes("graphic") || 
-                                           name.includes("label") || 
-                                           name.includes("nfc");
-                                           
-                        if (child.material && !isExcluded) {
-                            // If the material has a texture map (like a baked logo), preserve it
-                            if (!child.material.map) {
-                                child.material.color.copy(color);
-                                child.material.roughness = 0.4;
-                                child.material.metalness = 0.6;
-                                child.material.needsUpdate = true;
-                            }
-                        }
-                    }
-                });
-            }
 
             // WebGL / Three.js Renderer and Model Loader
             function init3dViewer() {
@@ -490,8 +434,6 @@
                 pointLight.position.set(0, 0, 3);
                 scene.add(pointLight);
                 
-                // 6. Setup Swatches
-                setupColorSwatches();
                 
                 // 7. Load GLB Model
                 const loader = new THREE.GLTFLoader();
@@ -554,13 +496,7 @@
                     model.add(tag);
                     model.add(ring);
                     scene.add(model);
-                    
-                    // Apply initial active swatch color to fallback model
-                    const activeSwatch = document.querySelector('.swatch.active');
-                    if (activeSwatch) {
-                        const initialColorHex = activeSwatch.getAttribute('data-color');
-                        updateModelColor(initialColorHex);
-                    }
+
                 }
                 
                 camera.lookAt(0, 0, 0);
